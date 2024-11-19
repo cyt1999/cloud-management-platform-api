@@ -20,6 +20,10 @@ from rest_framework.routers import DefaultRouter
 from CustomerApp.views import CustomerViewSet
 from CloudServerApp.views import CloudServerViewSet, MonitoringDataViewSet
 from DomainApp.views import DomainViewSet
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 router = DefaultRouter()
 router.register(r'customers', CustomerViewSet)
@@ -30,4 +34,6 @@ router.register(r'domains', DomainViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),  # 使用API路由
+    path('api/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'), # 登陆接口
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # 刷新令牌
 ]
