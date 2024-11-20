@@ -3,15 +3,19 @@ from CustomerApp.models import Customer
 
 # 云服务器模型，存储云服务器的基本信息
 class CloudServer(models.Model):
-    instance_name = models.CharField(max_length=100)  # 实例名称
     instance_id = models.CharField(max_length=100)  # 实例ID
     status = models.CharField(max_length=50)  # 状态
-    specification = models.CharField(max_length=100)  # 规格
-    ip_address = models.GenericIPAddressField()  # IP地址
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)  # 关联的客户
+    public_ip_address = models.GenericIPAddressField(null=True, blank=True)  # 公共IP地址
+    private_ip_address = models.GenericIPAddressField(null=True, blank=True)  # 私有IP地址
+    cpu = models.IntegerField(null=True, blank=True)  # CPU数量
+    memory = models.FloatField(null=True, blank=True)  # 内存大小（GB）
+    instance_charge_type = models.CharField(max_length=50, null=True, blank=True)  # 实例计费类型
+    creation_time = models.DateTimeField(null=True, blank=True)  # 创建时间
+    expired_time = models.DateTimeField(null=True, blank=True)  # 到期时间
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)  # 关联的客户，并且如果该客户被删除，所有与之关联的云服务器实例也会被删除。
 
     def __str__(self):
-        return self.instance_name  # 返回实例名称作为对象的字符串表示
+        return self.instance_id  # 返回实例名称作为对象的字符串表示
 
 # 监控数据模型，存储云服务器的监控信息
 class MonitoringData(models.Model):

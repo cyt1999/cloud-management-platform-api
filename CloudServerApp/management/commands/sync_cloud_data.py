@@ -14,9 +14,9 @@ class Command(BaseCommand):
         # 遍历所有客户，根据客户类型初始化不同的云平台客户端
         for customer in customers:
             if customer.cloud_platform_type == 'aliyun':
-                client = AliyunClient(customer.access_key_id, customer.access_key_secret)
+                client = AliyunClient(customer.access_key_id, customer.access_key_secret, customer.region,customer.id)
             elif customer.cloud_platform_type == 'volcengine':
-                client = VolcengineClient(customer.access_key_id, customer.access_key_secret)
+                client = VolcengineClient(customer.access_key_id, customer.access_key_secret, customer.region,customer.id)
             else:
                 self.stdout.write(self.style.WARNING(f"Unsupported platform: {customer.cloud_platform_type}"))
                 continue

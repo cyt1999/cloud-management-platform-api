@@ -11,21 +11,23 @@ Cloud Management Platform API 是一个基于 Django 的 RESTful API 项目，�
 - **云服务器管理**：管理云服务器的基本信息，包括实例名称、状态、IP 地址等。
 - **域名管理**：管理域名的基本信息，包括域名名称、状态、注册时间等。
 - **监控数据管理**：存储和管理云服务器的监控数据，包括 CPU 使用率、内存使用率等。
+- **云平台数据同步**：使用 APScheduler 定时任务，每天自动同步云服务器和域名信息。
 
 ## 使用技术
 
 - **Django**：作为 Web 框架。
 - **Django REST Framework**：用于构建 RESTful API。
 - **Simple JWT**：用于实现 JSON Web Token 身份验证。
+- **APScheduler**：用于定时任务调度，实现云平台数据的自动同步。
 
 ## 目录结构
 
-- **CloudManagementPlatformApi**：主项目目录，包含项目配置、URL 配置等。
+- **CloudManagementPlatformApi**：主项目目录，包含项目配置、URL 配置、调度器配置等。
 - **CustomerApp**：客户管理应用，包含客户模型、序列化器、视图等。
-- **CloudServerApp**：云服务器管理应用，包含云服务器模型、序列化器、视图等。
+- **CloudServerApp**：云服务器管理应用，包含云服务器模型、序列化器、视图、管理命令等。
 - **DomainApp**：域名管理应用，包含域名模型、序列化器、视图等。
 - **UserAuthApp**：用户认证应用，包含用户注册、序列化器、视图等。
-
+- **cloud_providers**：云平台客户端模块，包含阿里云和火山引擎的客户端实现。
 
 ## 安装与运行
 
