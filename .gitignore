@@ -6,6 +6,7 @@ db.sqlite3
 
 # 忽略临时文件
 __pycache__/
+**/__pycache__
 
 # 忽略字节编译的文件
 *.py[cod]
