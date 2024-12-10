@@ -16,3 +16,16 @@ __pycache__/
 # 忽略数据库迁移文件
 **/migrations/*.py
 !**/migrations/__init__.py
+
+
+# 忽略环境变量文件
+.env
+*.env
+
+# 忽略IDE配置文件
+.vscode/
+.idea/
+
+# 忽略操作系统生成的文件
+.DS_Store
+Thumbs.db
