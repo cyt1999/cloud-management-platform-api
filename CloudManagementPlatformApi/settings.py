@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'CustomerApp',
     'CloudServerApp',
     'DomainApp',
+    'NotificationApp',
+    'django_apscheduler',
     'rest_framework_simplejwt',
 ]
 
@@ -141,3 +143,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'your-email@example.com'
 EMAIL_HOST_PASSWORD = 'your-email-password'
+
+# 添加调度器配置
+SCHEDULER_DEFAULT = True  # 是否启用调度器
+SCHEDULER_TIMEZONE = 'Asia/Shanghai'  # 设置时区
