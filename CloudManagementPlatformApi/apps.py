@@ -5,6 +5,5 @@ class CloudmanagementplatformapiConfig(AppConfig):
     name = 'CloudManagementPlatformApi'
 
     def ready(self):
-        # 确保调度器在应用程序准备好时启动
-        from . import scheduler
-        scheduler.start() 
+        # 移除自动启动调度器的代码,确保在数据库迁移完成后再启动调度器
+        pass 

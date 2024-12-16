@@ -4,9 +4,14 @@ db.sqlite3
 # 忽略日志文件
 *.log           
 
-# 忽略临时文件
+# 忽略 .pyc 文件
+*.pyc
+
+# 忽略 __pycache__ 目录
 __pycache__/
-**/__pycache__
+
+# # 忽略数据库迁移文件
+*/migrations/__pycache__/
 
 # 忽略字节编译的文件
 *.py[cod]
