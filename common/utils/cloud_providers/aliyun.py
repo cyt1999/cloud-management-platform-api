@@ -9,7 +9,12 @@ from Tea.exceptions import UnretryableException, TeaException
 from apps.cloud_server.models import CloudServer
 from apps.customer.models import Customer
 from apps.domain.models import Domain
-from django.utils import timezone
+from zoneinfo import ZoneInfo
+from datetime import datetime
+import logging
+
+logger = logging.getLogger(__name__)
+
 class AliyunClient:
     def __init__(self, access_key_id, access_key_secret, regions, customer_id):
         self.access_key_id = access_key_id
@@ -96,6 +101,13 @@ class AliyunClient:
             domains = response.body.data.domain  # 获取域名信息
             customer = Customer.objects.get(id=self.customer_id) # 获取客户信息
             for domain in domains:
+                # 先将字符串转换为 datetime 对象
+                registration_date = datetime.strptime(domain.registration_date, '%Y-%m-%d %H:%M:%S')
+                expiration_date = datetime.strptime(domain.expiration_date, '%Y-%m-%d %H:%M:%S')
+                
+                # 然后添加时区信息
+                registration_date = registration_date.replace(tzinfo=ZoneInfo('Asia/Shanghai'))
+                expiration_date = expiration_date.replace(tzinfo=ZoneInfo('Asia/Shanghai'))
                 # 更新或创建域名信息
                 Domain.objects.update_or_create(
                     domain_name=domain.domain_name,
@@ -105,9 +117,9 @@ class AliyunClient:
                         # 域名持有人
                         'ccompany': domain.ccompany, 
                         # 注册时间  # 处理日期时间并添加时区信息
-                        'registration_date':  timezone.make_aware(domain.registration_date, timezone=timezone.utc),
+                        'registration_date':  registration_date,
                         # 到期时间  # 处理日期时间并添加时区信息
-                        'expiration_date': timezone.make_aware(domain.expiration_date, timezone=timezone.utc),
+                        'expiration_date': expiration_date,
                         # 到期时间差
                         'expiration_curr_date_diff': domain.expiration_curr_date_diff,
                         # 关联的客户
